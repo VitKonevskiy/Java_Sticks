@@ -128,7 +128,8 @@ public class GameField {
         }
     }
 
-    public void setMark(int x,int y) throws Exception {
+    public void setMark(Player player,int x,int y) throws Exception {
+        int counterProbablyField = 0;
         if (gameEdges[x][y]!=null)
             if(!gameEdges[x][y].isSet) {
                 gameEdges[x][y].isSet = true;
@@ -136,8 +137,16 @@ public class GameField {
                 Field[] probablyFields = getProbablyFields();
                 for(int k=0;k<probablyFields.length;k++)
                 {
-                    String firstPlayerLeter = "B";
-                    probablyFields[k].CheckAndLock(firstPlayerLeter);
+                    if(probablyFields[k]!= null)
+                    {
+                        counterProbablyField++;
+                        probablyFields[k].CheckAndLock(player.letter);
+                        player.stepAgain = true;
+                    }
+                }
+                if (counterProbablyField==0)
+                {
+                    player.stepAgain = false;
                 }
                 Draw();
             }
@@ -160,6 +169,55 @@ public class GameField {
                     counter++;
                 }
             }
+        return result;
+    }
+
+    public boolean GameIsOver(String firstLetter, String secondLetter)
+    {
+        int leter1 = 0;
+        int leter2 = 0;
+        boolean result = true;
+        for(int i=0;i<4;i++)
+            for(int j=0;j<4;j++)
+                if (gameField[i][j].getLetter().equals(" "))
+                {
+                    result = false;
+                }
+
+        if (result)
+        {
+            for(int i=0;i<4;i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (gameField[i][j].getLetter().equals(firstLetter))
+                    {
+                        leter1++;
+                    }
+                    if (gameField[i][j].getLetter().equals(secondLetter))
+                    {
+                        leter2++;
+                    }
+                }
+            }
+            if (leter1>leter2)
+            {
+                System.out.println("Player with letter '"+firstLetter+"' WIN! Congratulations!");
+            }
+            else if (leter2>leter1)
+            {
+                System.out.println("Player with letter '"+secondLetter+"' WIN! Congratulations!");
+            }
+            else
+            {
+                System.out.println("nobody Win!");
+            }
+            System.out.println("\tResuts:");
+            System.out.println("'"+firstLetter+"' = "+ leter1);
+            System.out.println("'"+secondLetter+"' = "+ leter2);
+            System.out.print("Thank you for game!");
+
+        }
         return result;
     }
 }
