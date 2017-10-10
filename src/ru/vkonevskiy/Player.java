@@ -1,6 +1,8 @@
 package ru.vkonevskiy;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
     public int id;
     public String letter;
     public boolean stepAgain;

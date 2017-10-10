@@ -1,6 +1,8 @@
 package ru.vkonevskiy;
 
-public class Edge {
+import java.io.Serializable;
+
+public class Edge implements Serializable {
     public int x;
     public int y;
     public boolean isSet;

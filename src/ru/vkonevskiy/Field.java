@@ -1,6 +1,8 @@
 package ru.vkonevskiy;
 
-public class Field {
+import java.io.Serializable;
+
+public class Field implements Serializable {
     public Edge leftEdge;
     public Edge topEdge;
     public Edge rightEdge;
